@@ -23,35 +23,44 @@ const apiRequest = async () => {
 
 const updatePage = async () => {
   const gallery = document.getElementById('cs1300-gallery');
-
-  // Make API request and get an array of fruit objects
+  
+ // Make API request and get an array of fruit objects
   const fruitsArray = await apiRequest();
-  // console.log(fruitsArray);
-
+  console.log(fruitsArray);
+  
   // TODO: Use either `map` and/or `filter` to extract some data from the array of fruit objects
   // For example, find "name of all fruits whose sugar > 15",
-
+  
+  const filteredArray = fruitsArray.filter((item) => {
+    return item.nutritions.sugar > 15;
+  })
+  
+  const keyArray = filteredArray.map((item) => {
+    return item.name;
+  })
   // TODO: Create a new HTML element to display your data
-
-  // TODO: Append your new element to the page
-
-}
-
-// SAMPLE CODE of how to create and append a new HTML element to the page
-const exampleAddElement = () => {
-  // Create a new HTML element and set its properties
   const newElement = document.createElement('div');
+  newElement.innerHTML = keyArray;
+  // TODO: Append your new element to the page
+  const existingElement = document.getElementById('cs1300-gallery');
+  existingElement.append(newElement);
+  }
+  
+  // SAMPLE CODE of how to create and append a new HTML element to the page
+  const exampleAddElement = () => {
+  // Create a new HTML element and set its properties
+  const newElement = filteredArray;
   newElement.innerHTML = "this text is inside a div";
-
+  
   // Append the new element to an existing part of the webpage
   const existingElement = document.getElementById('example-id');
   existingElement.append(newElement);
-}
-
-/**
- * To access information in this API, we need to send our requests through a proxy due to CORS restrictions.
- * This will be used as our proxy to avoid CORS issues.
- */
-// do not touch - stencil code to add the proxy to avoid CORS
-const PROXY_URL = 'https://cs1300-cors-anywhere.herokuapp.com/'
-const buildProxyEndpoint = (endpoint) => `${PROXY_URL}${endpoint}`;
+  }
+  
+  /**
+   * To access information in this API, we need to send our requests through a proxy due to CORS restrictions.
+   * This will be used as our proxy to avoid CORS issues.
+   */
+  // do not touch - stencil code to add the proxy to avoid CORS
+  const PROXY_URL = 'https://cs1300-cors-anywhere.herokuapp.com/'
+  const buildProxyEndpoint = (endpoint) => `${PROXY_URL}${endpoint}`;
